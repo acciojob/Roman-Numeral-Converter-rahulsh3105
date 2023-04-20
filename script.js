@@ -1,40 +1,34 @@
 function convertToRoman(num) {
   const obj = {
     0: ['M', 1000],
-    1: ['D', 500],
-    2: ['C', 100],
-    3: ['L', 50],
-    4: ['X', 10],
-    5: ['V', 5],
-    6: ['I', 1],
+    1: ['CM', 900],
+    2: ['D', 500],
+    3: ['CD', 400],
+    4: ['C', 100],
+    5: ['XC', 90],
+    6: ['L', 50],
+    7: ['XL', 40],
+    8: ['X', 10],
+    9: ['IX', 9],
+    10: ['V', 5],
+    11: ['IV', 4],
+    12: ['I', 1]
   };
 
-  let result = '';
-  let remainder = num;
+  let romanNumeral = '';
+  let i = 0;
+  while (num > 0) {
+    const currentNum = obj[i][1];
+    const currentSymbol = obj[i][0];
 
-  for (let i = 0; i <= 6; i++) {
-    const [roman, value] = obj[i];
-    const count = Math.floor(remainder / value);
-    remainder = remainder % value;
-
-    if (i % 2 === 0 && count === 4) {
-      const prev = result.charAt(result.length - 1);
-      const prevRoman = obj[i - 1][0];
-      result = result.slice(0, -1);
-
-      if (prev === prevRoman) {
-        result += roman + obj[i - 2][0];
-      } else {
-        result += roman + prev;
-      }
+    if (num >= currentNum) {
+      romanNumeral += currentSymbol;
+      num -= currentNum;
     } else {
-      result += roman.repeat(count);
+      i++;
     }
   }
-
-  return result;
+  return romanNumeral;
 }
 
-//console.log(convertToRoman(36)); // prints XXXVI
-// do not edit below this line
 module.exports = convertToRoman
